@@ -1,0 +1,43 @@
+@import url("https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&family=Rubik:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply bg-paper font-body text-ink antialiased;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Markdown в уроках */
+.lesson-md h2 {
+  @apply mb-3 mt-8 font-display text-xl font-bold;
+}
+.lesson-md p {
+  @apply mb-3 leading-relaxed;
+}
+.lesson-md ul, .lesson-md ol {
+  @apply mb-4 ml-5 space-y-1;
+}
+.lesson-md ul { @apply list-disc; }
+.lesson-md ol { @apply list-decimal; }
+.lesson-md blockquote {
+  @apply mb-3 rounded-xl border-2 border-ink bg-violet-soft px-4 py-2;
+}
+.lesson-md blockquote p { @apply mb-0; }
+.lesson-md code {
+  @apply rounded bg-ink/90 px-1.5 py-0.5 font-mono text-sm text-lime;
+}
+.lesson-md pre {
+  @apply mb-4 overflow-x-auto rounded-xl border-2 border-ink bg-ink p-4;
+}
+.lesson-md pre code {
+  @apply bg-transparent p-0 text-sm text-paper;
+}
+.lesson-md strong { @apply font-bold; }
