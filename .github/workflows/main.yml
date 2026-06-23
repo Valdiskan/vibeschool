@@ -1,0 +1,41 @@
+name: Build and Deploy Next.js app
+
+on:
+  push:
+    branches:
+      - main          # Или develop, если нужно
+
+jobs:
+  build:
+    name: Build and Publish Docker Image
+    runs-on: self-hosted   # Указываем использовать ваш self-hosted раннер
+
+    permissions:
+      contents: read
+      packages: write     # Это разрешение нужно для публикации в GHCR [citation:12]
+
+    steps:
+      # 1. Проверка кода из репозитория
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 2. Логин в GitHub Container Registry
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }} # GITHUB_TOKEN автоматически генерируется GitHub [citation:9][citation:12]
+
+      # 3. Сборка Docker-образа
+      - name: Build Docker image
+        run: |
+          IMAGE_NAME=ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}
+          docker build -t $IMAGE_NAME:latest -t $IMAGE_NAME:${{ github.sha }} .
+
+      # 4. Публикация образа в GHCR
+      - name: Push Docker image
+        run: |
+          IMAGE_NAME=ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}
+          docker push $IMAGE_NAME:latest
+          docker push $IMAGE_NAME:${{ github.sha }}
