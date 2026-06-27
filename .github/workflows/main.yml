@@ -36,6 +36,6 @@ jobs:
       # 4. Публикация образа в GHCR
       - name: Push Docker image
         run: |
-          IMAGE_NAME=ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}
+          IMAGE_NAME=ghcr.io/valdiskan/vibeschool
           docker push $IMAGE_NAME:latest
           docker push $IMAGE_NAME:${{ github.sha }}
