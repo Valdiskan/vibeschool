@@ -7,7 +7,7 @@ COPY package.json package-lock.json* ./
 RUN npm ci --only=production && npm cache clean --force
 
 
-FROM node:18-alpine AS builder
+FROM node:20-alpine AS builder
 WORKDIR /app
 
 # Копируем зависимости из предыдущей стадии
